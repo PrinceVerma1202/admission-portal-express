@@ -16,7 +16,7 @@ class FrontController {
     }
     static register = async (req, res) => {
         try {
-            res.render("register")
+            res.render("register",{msg:req.flash("error")});
 
         }
         catch (error) {
@@ -33,8 +33,23 @@ class FrontController {
     static insertReq = async(req,res)=>{
         try{
             // console.log("INSERT DATA")
-            console.log(req.body)
+            // console.log(req.body)
+            const {n,e,p,cp} = req.body;
+            const user = await Usermodel.findOne({email:e});
+            // console.log(user);
+            if (user){
+                req.flash("error","Email already exit");
+                res.redirect("/register");
+            }else{
 
+            }
+            // const result = new Usermodel({
+            //     name:n,
+            //     email:e,
+            //     password:p,
+            // });
+            // await result.save();
+            // res.redirect("/"); //route url
         }
         catch(error){
 
